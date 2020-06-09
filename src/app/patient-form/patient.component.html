@@ -1,0 +1,160 @@
+<form
+  [formGroup]="addressForm"
+  novalidate
+  (ngSubmit)="onSubmit(addressForm.value)">
+  <mat-card class="patient-card">
+    <mat-card-header>
+      <mat-card-title>Patient Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="First name"
+              formControlName="firstName"
+              />
+            <mat-error
+              *ngIf="addressForm.controls['firstName'].hasError('required')">
+              First name <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Last name"
+              formControlName="lastName"
+              />
+            <mat-error
+              *ngIf="addressForm.controls['lastName'].hasError('required')">
+              Last name <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Contact number"
+              formControlName="contactNumber"
+              />
+            <mat-error
+              *ngIf="addressForm.controls['contactNumber'].hasError('required')">
+              Contact number <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div formArrayName="addresses">
+        <h2>Addresses</h2>
+
+        <div
+          *ngFor="let address of addresses.controls; let i= index"
+          [formGroupName]="i">
+          <h3>Address - {{ i + 1 }}</h3>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input
+                  matInput
+                  placeholder="Address Line 1"
+                  formControlName="addressLine1"
+                  />
+                <mat-error
+                  *ngIf="address.controls['addressLine1'].hasError('required')">
+                  Address Line 1 <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input
+                  matInput
+                  placeholder="Address Line 2"
+                  formControlName="addressLine2"
+                  />
+                <mat-error
+                  *ngIf="address.controls['addressLine2'].hasError('required')">
+                  Address Line 2 <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="City" formControlName="city" />
+                <mat-error
+                  *ngIf="address.controls['city'].hasError('required')">
+                  City <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Country" formControlName="country"
+                  />
+                <mat-error
+                  *ngIf="address.controls['country'].hasError('required')">
+                  Country <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input
+                  matInput
+                  #postalCode
+                  maxlength="5"
+                  placeholder="Postal Code"
+                  type="number"
+                  formControlName="postalCode"
+                  />
+                <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <button (click)="addAddressForm()" mat-raised-button  type="button"> <mat-icon>add</mat-icon></button>
+      </div>
+      <br/>
+      <div class="row" *ngIf="showStatus" >
+        <div class="col">
+          <mat-form-field class="half-width">
+            <mat-label>Status</mat-label>
+            <mat-select placeholder="Status" formControlName="status">
+              <mat-option value="ACTIVE">ACTIVE</mat-option>
+              <mat-option value="DELETED">DELETED</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button *ngIf="isNew" mat-raised-button color="primary" type="submit">Submit</button>
+      <button *ngIf="!isNew" mat-raised-button color="primary" type="submit">
+        Update
+      </button>
+      <button *ngIf="!isNew && !showStatus" mat-raised-button color="primary" type="button"
+        (click)="softDelete()">
+        Soft Delete
+      </button>
+      <button mat-raised-button color="primary" type="button"
+      [routerLink]="['/list']">
+        Go Back
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
