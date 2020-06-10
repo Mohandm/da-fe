@@ -40,7 +40,6 @@ export class AuthService {
       .then((value) => {
         console.log('Nice, it worked!', value);
         this.user = value.user;
-
         this.user.getIdToken().then((token) => {
           localStorage.setItem('token', token);
         });
@@ -56,27 +55,21 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  public getCurrentUser = (): firebase.User => {
-    if (!this.user) {
-      this.firebaseAuth.authState.subscribe((user) => {
+  public getCurrentUser = (): Promise<firebase.User> => {
+
+
+    return new Promise<any>((resolve, reject) => {
+      var user = this.firebaseAuth.onAuthStateChanged(function(user){
         if (user) {
-          user
-            .getIdToken(false)
-            .then((token) => {
-              localStorage.setItem('token', token);
-              this.token = token;
-              this.user = user;
-            })
-            .catch((err) => {
-              localStorage.removeItem('token');
-              return null;
-            });
+          user.getIdToken().then((token) => {
+            localStorage.setItem('token', token);
+          });
+          resolve(user);
         } else {
-          return null;
+          reject('No user logged in');
         }
-      });
-    }
-    return this.user;
+      })
+    })
   };
 
   public getToken = (): String => {

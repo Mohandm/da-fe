@@ -21,7 +21,7 @@ const routes: Routes = [
     canLoad: [AuthenticationGuard],
   },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/list', pathMatch: 'full' },
   { path: '**', redirectTo: '/list' },
 ];
 

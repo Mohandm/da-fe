@@ -16,7 +16,8 @@ export class PatientService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   private apiUrl: String =
-    'http://ec2-54-255-140-128.ap-southeast-1.compute.amazonaws.com:8080/v1/patients/';
+    //'https://d2kr2fc0dvmk5l.cloudfront.net/v1/patients/';
+    'http://localhost:8080/v1/patients/'
 
   create(data: Patient): Observable<any> {
     return this.http
