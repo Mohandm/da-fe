@@ -1,4 +1,14 @@
-# DoctorAnywhere
+# URL 
+
+https://da-assignment-ffd9d.web.app/login 
+
+## Users to Login
+
+ Email - john@test.com,  bob@test.com
+ Password - password
+
+
+# Assignment
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
